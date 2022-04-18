@@ -23,7 +23,6 @@
 					<noHeaderFiles>true</noHeaderFiles>
 					<noManPages>true</noManPages>
 					<stripDebug>true</stripDebug>
-					<output>${project.build.directory}/jre</output>
 					<addModules>
 						<addModule>java.compiler</addModule>
 						<addModule>java.datatransfer</addModule>
