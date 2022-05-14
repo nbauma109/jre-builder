@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.nbauma109</groupId>
 	<artifactId>jre</artifactId>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 	<packaging>jlink</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,13 +29,9 @@
 						<addModule>java.desktop</addModule>
 						<addModule>java.instrument</addModule>
 						<addModule>java.logging</addModule>
-						<addModule>java.management</addModule>
-						<addModule>java.naming</addModule>
 						<addModule>java.prefs</addModule>
-						<addModule>java.scripting</addModule>
 						<addModule>java.xml</addModule>
 						<addModule>jdk.compiler</addModule>
-						<addModule>jdk.unsupported</addModule>
 						<addModule>jdk.zipfs</addModule>
 					</addModules>
 				</configuration>
