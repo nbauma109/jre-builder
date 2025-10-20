@@ -20,13 +20,31 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Use setup-java JDK on PATH
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "JAVA_HOME is: $JAVA_HOME"
+          echo "PATH before: $PATH"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          echo "PATH after:  $PATH"
+          which java
+          java -version
+          which jlink
+          jlink --version
+
       - name: Build JRE image with jlink
-        run: mvn --batch-mode --no-transfer-progress clean package
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
+          mvn --batch-mode --no-transfer-progress clean package
 
       - name: Determine versions
         shell: bash
         run: |
           set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
@@ -63,13 +81,31 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Use setup-java JDK on PATH
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "JAVA_HOME is: $JAVA_HOME"
+          echo "PATH before: $PATH"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          echo "PATH after:  $PATH"
+          which java
+          java -version
+          which jlink
+          jlink --version
+
       - name: Build JRE image with jlink
-        run: mvn --batch-mode --no-transfer-progress clean package
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
+          mvn --batch-mode --no-transfer-progress clean package
 
       - name: Determine versions
         shell: bash
         run: |
           set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
@@ -106,13 +142,31 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Use setup-java JDK on PATH
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "JAVA_HOME is: $JAVA_HOME"
+          echo "PATH before: $PATH"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          echo "PATH after:  $PATH"
+          which java
+          java -version
+          which jlink
+          jlink --version
+
       - name: Build JRE image with jlink
-        run: mvn --batch-mode --no-transfer-progress clean package
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
+          mvn --batch-mode --no-transfer-progress clean package
 
       - name: Determine versions
         shell: bash
         run: |
           set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
@@ -149,13 +203,31 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Use setup-java JDK on PATH
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "JAVA_HOME is: $JAVA_HOME"
+          echo "PATH before: $PATH"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          echo "PATH after:  $PATH"
+          which java
+          java -version
+          which jlink
+          jlink --version
+
       - name: Build JRE image with jlink
-        run: mvn --batch-mode --no-transfer-progress clean package
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
+          mvn --batch-mode --no-transfer-progress clean package
 
       - name: Determine versions
         shell: bash
         run: |
           set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
@@ -192,14 +264,31 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Use setup-java JDK on PATH
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "JAVA_HOME is: $JAVA_HOME"
+          echo "PATH before: $PATH"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          echo "PATH after:  $PATH"
+          which java
+          java -version
+          which jlink
+          jlink --version
+
       - name: Build JRE image with jlink
         shell: bash
-        run: mvn --batch-mode --no-transfer-progress clean package
+        run: |
+          set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
+          mvn --batch-mode --no-transfer-progress clean package
 
       - name: Determine versions
         shell: bash
         run: |
           set -euo pipefail
+          export PATH="$JAVA_HOME/bin:$PATH"
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
