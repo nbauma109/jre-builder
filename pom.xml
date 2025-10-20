@@ -19,7 +19,6 @@
 				<extensions>true</extensions>
 				<configuration>
 					<goal>jlink</goal>
-					<compress>2</compress>
 					<noHeaderFiles>true</noHeaderFiles>
 					<noManPages>true</noManPages>
 					<stripDebug>true</stripDebug>
