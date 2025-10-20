@@ -29,16 +29,16 @@ jobs:
           set -euo pipefail
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
-          echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
-          echo "JRE_VERSION=$JRE_VERSION"         >> $GITHUB_ENV
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
+          echo "JRE_VERSION=$JRE_VERSION"         >> "$GITHUB_ENV"
 
       - name: Rename generated ZIP
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p dist
-          SRC=$(ls -1 target/jre-*.zip | head -n 1)
-          if [ -z "$SRC" ]; then
+          SRC=$(ls -1 target/jre-*.zip | head -n 1 || true)
+          if [ -z "${SRC:-}" ]; then
             echo "No jre-*.zip found in target/. Contents:"; ls -la target; exit 1
           fi
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-macos-arm64.zip"
@@ -72,16 +72,16 @@ jobs:
           set -euo pipefail
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
-          echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
-          echo "JRE_VERSION=$JRE_VERSION"         >> $GITHUB_ENV
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
+          echo "JRE_VERSION=$JRE_VERSION"         >> "$GITHUB_ENV"
 
       - name: Rename generated ZIP
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p dist
-          SRC=$(ls -1 target/jre-*.zip | head -n 1)
-          if [ -z "$SRC" ]; then
+          SRC=$(ls -1 target/jre-*.zip | head -n 1 || true)
+          if [ -z "${SRC:-}" ]; then
             echo "No jre-*.zip found in target/. Contents:"; ls -la target; exit 1
           fi
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-macos-x64.zip"
@@ -115,16 +115,16 @@ jobs:
           set -euo pipefail
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
-          echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
-          echo "JRE_VERSION=$JRE_VERSION"         >> $GITHUB_ENV
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
+          echo "JRE_VERSION=$JRE_VERSION"         >> "$GITHUB_ENV"
 
       - name: Rename generated ZIP
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p dist
-          SRC=$(ls -1 target/jre-*.zip | head -n 1)
-          if [ -z "$SRC" ]; then
+          SRC=$(ls -1 target/jre-*.zip | head -n 1 || true)
+          if [ -z "${SRC:-}" ]; then
             echo "No jre-*.zip found in target/. Contents:"; ls -la target; exit 1
           fi
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-linux-x64.zip"
@@ -158,16 +158,16 @@ jobs:
           set -euo pipefail
           PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
           JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
-          echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
-          echo "JRE_VERSION=$JRE_VERSION"         >> $GITHUB_ENV
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
+          echo "JRE_VERSION=$JRE_VERSION"         >> "$GITHUB_ENV"
 
       - name: Rename generated ZIP
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p dist
-          SRC=$(ls -1 target/jre-*.zip | head -n 1)
-          if [ -z "$SRC" ]; then
+          SRC=$(ls -1 target/jre-*.zip | head -n 1 || true)
+          if [ -z "${SRC:-}" ]; then
             echo "No jre-*.zip found in target/. Contents:"; ls -la target; exit 1
           fi
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-linux-arm64.zip"
@@ -193,30 +193,34 @@ jobs:
           cache: maven
 
       - name: Build JRE image with jlink
+        shell: bash
         run: mvn --batch-mode --no-transfer-progress clean package
 
       - name: Determine versions
-        shell: pwsh
+        shell: bash
         run: |
-          $projectVersion = (& mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
-          $j = & java -XshowSettings:properties -version 2>&1
-          $jreVersion = ($j | Select-String 'java.version = ').ToString().Split()[-1]
-          "PROJECT_VERSION=$projectVersion" | Out-File -FilePath $env:GITHUB_ENV -Append
-          "JRE_VERSION=$jreVersion"         | Out-File -FilePath $env:GITHUB_ENV -Append
+          set -euo pipefail
+          PROJECT_VERSION=$(mvn --batch-mode --no-transfer-progress -q -DforceStdout help:evaluate -Dexpression=project.version)
+          JRE_VERSION=$(java -XshowSettings:properties -version 2>&1 | grep 'java.version = ' | awk '{ print $3 }')
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
+          echo "JRE_VERSION=$JRE_VERSION"         >> "$GITHUB_ENV"
 
       - name: Rename generated ZIP
-        shell: pwsh
+        shell: bash
         run: |
-          New-Item -ItemType Directory -Force -Path dist | Out-Null
-          $src = Get-ChildItem -Path target -Filter 'jre-*.zip' | Select-Object -First 1
-          if (-not $src) { throw "No jre-*.zip found in target/" }
-          Copy-Item $src.FullName ("dist\jre-$env:PROJECT_VERSION-$env:JRE_VERSION-windows-x64.zip")
+          set -euo pipefail
+          mkdir -p dist
+          SRC=$(ls -1 target/jre-*.zip | head -n 1 || true)
+          if [ -z "${SRC:-}" ]; then
+            echo "No jre-*.zip found in target/. Contents:"; ls -la target; exit 1
+          fi
+          cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-windows-x64.zip"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-x64
-          path: dist\*.zip
+          path: dist/*.zip
 
   release:
     name: Create GitHub Release
