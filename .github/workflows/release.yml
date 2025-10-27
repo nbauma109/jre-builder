@@ -62,7 +62,7 @@ jobs:
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-macos-arm64.zip"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: macos-arm64
           path: dist/*.zip
@@ -123,7 +123,7 @@ jobs:
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-macos-x64.zip"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: macos-x64
           path: dist/*.zip
@@ -184,7 +184,7 @@ jobs:
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-linux-x64.zip"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: linux-x64
           path: dist/*.zip
@@ -245,7 +245,7 @@ jobs:
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-linux-arm64.zip"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: linux-arm64
           path: dist/*.zip
@@ -306,7 +306,7 @@ jobs:
           cp "$SRC" "dist/jre-${PROJECT_VERSION}-${JRE_VERSION}-windows-x64.zip"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: windows-x64
           path: dist/*.zip
