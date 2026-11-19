@@ -35,6 +35,7 @@
             <addModule>jdk.zipfs</addModule>
             <addModule>jdk.crypto.ec</addModule>
             <addModule>jdk.crypto.cryptoki</addModule>
+            <addModule>jdk.jdi</addModule>
           </addModules>
         </configuration>
       </plugin>
